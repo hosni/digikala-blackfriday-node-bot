@@ -21,6 +21,14 @@ export default class HTTPClient {
 
 			'socks://127.0.0.1:9060',
 			'socks://127.0.0.1:9061',
+			'socks://127.0.0.1:9062',
+			'socks://127.0.0.1:9063',
+			'socks://127.0.0.1:9064',
+			'socks://127.0.0.1:9065',
+			'socks://127.0.0.1:9066',
+			'socks://127.0.0.1:9067',
+			'socks://127.0.0.1:9068',
+
 		];
 		let isFirst = true;
 		for (const sockProxy of socksProxies) {
