@@ -59,13 +59,18 @@ export default class Main {
 			});
 		};
 
-		const promises = [];
+		let promises = [];
 		for (const index in this.clickImpressions) {
 			const clickImpression = this.clickImpressions[index];
+			const activeProductInfo = Treasure.getActiveProductInfo();
+			if (!activeProductInfo) {
+				Logger.warn('There is no active product!');
+			}
 			const promise = requester(clickImpression.id);
 			promises.push(promise);
 			if (promises.length >= HTTPClient.getClientsCount() * 1) {
-				await Promise.race(promises);
+				await Promise.all(promises);
+				promises = [];
 			}
 		}
 	}
@@ -92,7 +97,7 @@ export default class Main {
 				Logger.debug(`Main.getProducts: page: ${pageNumber}, catch:`, err);
 			});
 		};
-		for (let pageNumber = 1; pageNumber <= 1 /*47*/; pageNumber++) {
+		for (let pageNumber = 1; pageNumber <= 47; pageNumber++) {
 			promises.push(requester(pageNumber));
 		}
 		return Promise.all(promises);
