@@ -39,7 +39,7 @@ export default class Logger {
 					chat_id: chatID,
 					text: `[${now}]\n${message}`,
 				}).catch((err) => {
-					console.warn(`can not notify by telegram! try again, message: ${message}`);
+					console.warn(`can not notify by telegram! try again, message: ${message}`, err);
 					// sendRequest(chatID);
 				});
 			}
