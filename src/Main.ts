@@ -63,7 +63,7 @@ export default class Main {
 						this.interestedImages[productID].push(imagePath);
 						Logger.warn(`Main.checkProducts.requester, id: ${productID}, find image: ${imagePath} , active product: ${activeProductInfo.productID}`);
 						Logger.telegramAlert(
-							`HEY!\n Check this image! Main.checkProducts.requester, id: ${productID}, find image: ${imagePath} , active product: ${activeProductInfo.productID}`,
+							`HEY!\n Check this product!:n${'https://www.digikala.com/product/dkp-' + productID}\nMain.checkProducts.requester, id: ${productID}, find image: ${imagePath} , active product: ${activeProductInfo.productID}`,
 							true
 						);
 					}
