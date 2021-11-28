@@ -10,7 +10,7 @@ export default class Treasure {
 		{
 			productID: 3738470, // کنسول بازی سونی مدل Playstation 5 Digital Edition ظرفیت 825 گیگابایت
 			startAt: 1638030600, // 1400/09/06 20:00:00
-			endAt: 1638081000, // 1400/09/07 10:00:00
+			endAt: 1638041400, // 1400/09/06 23:00:00
 		},
 		{
 			productID: 984129, // کنسول بازی سونی مدل Playstation 4 Slim کد Region 2 CUH-2216B ظرفیت یک ترابایت
@@ -56,7 +56,7 @@ export default class Treasure {
 	public static getActiveProductInfo(): TreasureInfo {
 		const now = Math.floor(Date.now() / 1000);
 		for (const treasure of this.treasures) {
-			if (treasure.startAt >= now && now < treasure.endAt) {
+			if (treasure.startAt <= now && now < treasure.endAt) {
 				return treasure;
 			}
 		}

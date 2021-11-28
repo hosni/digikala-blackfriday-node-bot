@@ -12,15 +12,29 @@ export default class Main {
 	public static interestedImages: {[key: string]: string[]} = {};
 
 	public static async run() {
+		console.log(Treasure.getActiveProductInfo());
 		Logger.log('DigiKala Black Friday starts working!');
-		await this.getProducts();
-		Logger.log("count of: this.clickImpressions is", Object.keys(this.clickImpressions).length);
+
+		let lastUpdate = Math.floor(Date.now() / 1000);
+		const updateProducts = async () => {
+			lastUpdate = Math.floor(Date.now() / 1000);
+			await this.getProducts();
+			Logger.log("count of: this.clickImpressions is", Object.keys(this.clickImpressions).length);
+		};
+		await updateProducts();
+
 		while (true) {
+			const now = Math.floor(Date.now() / 1000);
+			if (now - lastUpdate > 1800) {
+				await updateProducts();
+			}
 			await this.checkProducts();
 		}
 	}
 
 	public static async checkProducts() {
+		const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+
 		const requester = (productID: number): Promise<void> => {
 			Logger.debug(`Main.checkProducts.requester, id: ${productID}`);
 			return HTTPClient.getClient().get(`https://sirius.digikala.com/v1/product/${productID}/`, {
@@ -64,7 +78,9 @@ export default class Main {
 			const clickImpression = this.clickImpressions[index];
 			const activeProductInfo = Treasure.getActiveProductInfo();
 			if (!activeProductInfo) {
-				Logger.warn('There is no active product!');
+				Logger.warn('There is no active product!, wait for 10 seconds...');
+				await delay(10000) /// waiting 10 second.
+				break;
 			}
 			const promise = requester(clickImpression.id);
 			promises.push(promise);
