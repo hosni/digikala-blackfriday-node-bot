@@ -63,7 +63,11 @@ export default class Main {
 						this.interestedImages[productID].push(imagePath);
 						Logger.warn(`Main.checkProducts.requester, id: ${productID}, find image: ${imagePath} , active product: ${activeProductInfo.productID}`);
 						Logger.telegramAlert(
-							`HEY!\n Check this product!:n${'https://www.digikala.com/product/dkp-' + productID}\nMain.checkProducts.requester, id: ${productID}, find image: ${imagePath} , active product: ${activeProductInfo.productID}`,
+							`(Main.checkProducts.requester)\nHEY!\n Check this image!\n` +
+							`image: ${imagePath}\n` +
+							`product: https://www.digikala.com/product/dkp-${productID} \n` + 
+							`active product id: ${activeProductInfo.productID} \n` +
+							`link to active product: https://www.digikala.com/product/dkp-${activeProductInfo.productID}`,
 							true
 						);
 					}
@@ -85,7 +89,8 @@ export default class Main {
 			const promise = requester(clickImpression.id);
 			promises.push(promise);
 			if (promises.length >= HTTPClient.getClientsCount() * 1) {
-				await Promise.all(promises);
+				await Promise.race(promises);
+				await delay(200);
 				promises = [];
 			}
 		}
