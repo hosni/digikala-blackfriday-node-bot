@@ -79,7 +79,7 @@ export default class Main {
 			const activeProductInfo = Treasure.getActiveProductInfo();
 			if (!activeProductInfo) {
 				Logger.warn('There is no active product!, wait for 10 seconds...');
-				await delay(10000) /// waiting 10 second.
+				await delay(1000) /// waiting 1 second.
 				break;
 			}
 			const promise = requester(clickImpression.id);
